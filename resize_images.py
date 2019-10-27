@@ -11,10 +11,15 @@ def resize_image(input_dir, infile, output_dir='resized', size=DEFAULT_SIZE):
 
     try:
         img = Image.open(input_dir + '/' + infile)
-        img = img.resize((size[0], size[1]), Image.LANCZOS)
+        w,h = img.size
 
+        if w > h:        
+            img = img.resize((size[0], size[1]), Image.LANCZOS)
+        else:
+            img = img.resize((size[1], size[0]), Image.LANCZOS)
         new_file = output_dir + '/' + outfile + extension
-        img.save(new_file)
+        img.save(new_file)       
+
     except IOError:
         print('unable to resize image {}'.format(infile))
 
