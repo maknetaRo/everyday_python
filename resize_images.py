@@ -19,21 +19,21 @@ def resize_image(input_dir, infile, output_dir='resized', size=DEFAULT_SIZE):
         img = Image.open(input_dir + '/' + infile)
         w,h = img.size
 
-        if w > h:
+        if w >= h:
             if int(h) / int(w) == 0.75 :        
                 img = img.resize((size[0], size[1]), Image.LANCZOS)
             else: 
                 proportion = int(h) / int(w)
-                new_h = int(w) * proportion
-                DEFAULT_SIZE = (1024, new_h)
+                new_h = int(size[0] * proportion)
+                size = (1024, new_h)
                 img = img.resize((size[0], size[1]), Image.LANCZOS)
         elif w < h: 
             if int(h) / int(w) ==0.75:
                 img = img.resize((size[1], size[0]), Image.LANCZOS)
             else: 
                 proportion = int(h) / int(w)
-                new_w = int(h) * proportion
-                DEFAULT_SIZE = (new_w, 768)
+                new_w = int(size[1] * proportion)
+                size = (new_w, 768)
                 img = img.resize((size[1], size[0]), Image.LANCZOS)
         else: 
             print("I don't know what to do!")
